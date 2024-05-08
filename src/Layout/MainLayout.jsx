@@ -5,10 +5,14 @@ import Footer from "../Shared/Footer/Footer";
 const MainLayout = () => {
     return (
         <div>
-            <div className="my-3">
+            <div className="mb-6">
             <Navber></Navber>
             </div>
+
+            <div className="mb-1">
             <Outlet></Outlet>
+            </div>
+
             <Footer></Footer>
         </div>
     );
