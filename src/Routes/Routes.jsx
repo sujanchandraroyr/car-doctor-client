@@ -8,6 +8,9 @@ import Blog from "../Pages/Blog/Blog";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import Error from "../Pages/Error/Error";
+import ChekOut from "../Pages/ChekOut/ChekOut";
+import Bookings from "../Pages/ChekOut/Bookings";
+import PrivateRoutes from "./PrivateRoutes";
 
 
 export const router = createBrowserRouter([
@@ -44,6 +47,15 @@ export const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp></SignUp>
+            },
+            {
+                path: '/chekout/:id',
+                element: <ChekOut></ChekOut>,
+                loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
+            },
+            {
+                path: '/bookings',
+                element: <PrivateRoutes><Bookings></Bookings></PrivateRoutes>,
             }
         ]
     }

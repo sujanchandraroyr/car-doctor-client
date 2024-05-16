@@ -6,21 +6,22 @@ import Swal from 'sweetalert2';
 
 const Navber = () => {
 
-  const {logOutUser} = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  const {user, logOutUser } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logOutUser()
-    .then(() => {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Do you want to continue',
-        icon: 'success',
-        confirmButtonText: 'Ok'
+      .then(() => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Do you want to continue',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
       })
-    })
-    .catch(error => {
-      console(error.message)
-    })
+      .catch(error => {
+        console(error.message)
+      })
   }
 
   const navlinks = <>
@@ -29,7 +30,18 @@ const Navber = () => {
     <li><Link to="/services">Services</Link></li>
     <li><Link to="/blog">Blog</Link></li>
     <li><Link to="/contact">Contact</Link></li>
-    <li><Link onClick={handleLogOut} >Sign Out</Link></li>
+
+
+    {
+      user?.email ? <>
+        <li><button onClick={handleLogOut} >Sign Out</button></li>
+        <li><Link to="/bookings">Bookings</Link></li>
+      </> :
+      <>
+      <li><Link to="/signup">Sign Up</Link></li>
+      <li><Link to="/login">Login</Link></li>
+      </>
+    }
 
   </>
   return (
@@ -51,7 +63,7 @@ const Navber = () => {
         </ul>
       </div>
       <div className="navbar-end">
-      <button className="btn btn-outline btn-error">Appointment</button>
+        <button className="btn btn-outline btn-error">Appointment</button>
       </div>
     </div>
   );
