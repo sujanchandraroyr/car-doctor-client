@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/chekout/:id',
-                element: <ChekOut></ChekOut>,
+                element: <PrivateRoutes><ChekOut></ChekOut></PrivateRoutes>,
                 loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
             },
             {

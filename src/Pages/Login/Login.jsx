@@ -1,33 +1,50 @@
-import { Link } from 'react-router-dom';
-import img from '../../assets/images/login/login.svg'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+// import img from '../../assets/images/login/login.svg'
+import loginpic from '../../assets/images/login/file.png'
 import { useContext } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
+import axios from 'axios';
 
 const Login = () => {
-    const {loginUser} = useContext(AuthContext);
-    
+    const { loginUser } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+
 
     const handleLogin = (e) => {
         e.preventDefault()
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        
+
         //loginUser
         loginUser(email, password)
-        .then(result => {
-            console.log(result.user)
-        })
-        .catch(error => {
-            console.log(error.message)
-        })
+            .then(result => {
+                const logedUser = result.user;
+                console.log(logedUser)
+
+
+                // get token
+                const user = { email }
+                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.success) {
+                            navigate(location?.state ? location.state : '/')
+                        }
+                    })
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
-    
+
     return (
         <div className="hero bg-base-200 py-5">
-            <div className="hero-content flex-col lg:flex-row">
+            <div className="hero-content flex-col items-center lg:flex-row">
                 <div className="w-1/2">
-                    <img src={img} alt="login" />
+                    <img src={loginpic} alt="login" />
                 </div>
                 <div className="card shrink-0 w-1/2 max-w-sm shadow-2xl bg-base-100 ">
                     <h1 className="text-5xl font-bold text-center">Login now!</h1>

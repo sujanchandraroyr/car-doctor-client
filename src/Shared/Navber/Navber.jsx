@@ -35,7 +35,7 @@ const Navber = () => {
     {
       user?.email ? <>
         <li><button onClick={handleLogOut} >Sign Out</button></li>
-        <li><Link to="/bookings">Bookings</Link></li>
+        <li><Link to="/bookings">My Bookings</Link></li>
       </> :
       <>
       <li><Link to="/signup">Sign Up</Link></li>
